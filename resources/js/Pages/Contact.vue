@@ -230,6 +230,10 @@ function submitForm() {
     .public-footer { flex-direction: column; text-align: center; }
 }
 @media (max-width: 560px) {
+    .contact-hero { padding: 3rem 1rem; }
+    .contact-hero-content h1 { font-size: 1.75rem; }
+    .contact-section { padding: 2rem 1rem; }
     .contact-info-grid { grid-template-columns: 1fr; }
+    .contact-form-wrapper { padding: 1.5rem 1rem; border-radius: 1rem; }
 }
 </style>

@@ -297,11 +297,23 @@ import TopBar from '../Components/TopBar.vue';
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-    .hero-section { flex-direction: column; padding: 4rem 2rem; text-align: center; }
+    .hero-section { flex-direction: column; padding: 4rem 1.75rem; text-align: center; }
     .hero-title { font-size: 2.5rem; }
     .hero-actions { justify-content: center; }
     .hero-visual { display: none; }
     .features-section { padding: 4rem 1.5rem; }
+    .features-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
     .public-footer { flex-direction: column; text-align: center; }
+}
+
+@media (max-width: 480px) {
+    .hero-section { padding: 3rem 1.25rem; }
+    .hero-title { font-size: 1.95rem; }
+    .hero-subtitle { font-size: 0.95rem; margin-bottom: 1.75rem; }
+    .hero-actions { flex-direction: column; width: 100%; gap: 0.75rem; }
+    .hero-btn-primary, .hero-btn-outline { width: 100%; text-align: center; justify-content: center; }
+    .features-section { padding: 3rem 1rem; }
+    .features-grid { grid-template-columns: 1fr; }
+    .section-title { font-size: 1.75rem; }
 }
 </style>

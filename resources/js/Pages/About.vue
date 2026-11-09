@@ -202,4 +202,13 @@ const features = [
     .about-features { padding: 3rem 1.5rem; }
     .public-footer { flex-direction: column; text-align: center; }
 }
+
+@media (max-width: 480px) {
+    .about-hero { padding: 3rem 1rem; }
+    .about-hero-content h1 { font-size: 1.75rem; }
+    .about-hero-content p { font-size: 0.95rem; }
+    .about-section { padding: 2.5rem 1rem; }
+    .about-features { padding: 2.5rem 1rem; }
+    .about-values-grid { grid-template-columns: 1fr; }
+}
 </style>

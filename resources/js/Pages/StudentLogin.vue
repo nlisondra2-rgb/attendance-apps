@@ -439,7 +439,16 @@ video { width: 100%; height: 100%; object-fit: cover; }
 }
 
 @media (max-width: 480px) {
-    .login-card { padding: 2rem 1.5rem; border-radius: 1.5rem; }
+    .login-wrapper { padding: 1rem 0.75rem; }
+    .login-card { padding: 2rem 1.25rem; border-radius: 1.5rem; }
     .login-title { font-size: 2rem; }
+    .login-subtitle { font-size: 0.88rem; margin-bottom: 1.75rem; padding: 0; }
+    .scanner-content { padding: 1.5rem 1rem; border-radius: 1.5rem; }
+}
+
+@media (max-width: 360px) {
+    .login-card { padding: 1.5rem 1rem; }
+    .login-title { font-size: 1.65rem; }
+    .btn-primary, .btn-emerald { padding: 1rem 0.75rem; font-size: 1rem; }
 }
 </style>
