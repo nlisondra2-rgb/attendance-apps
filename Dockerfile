@@ -13,9 +13,9 @@ COPY . .
 RUN npm run build
 
 # ==============================================================================
-# Stage 2: PHP 8.2 + Apache Production Image
+# Stage 2: PHP 8.4 + Apache Production Image
 # ==============================================================================
-FROM php:8.2-apache
+FROM php:8.4-apache
 
 # Install required system packages and PHP extension libraries
 RUN apt-get update && apt-get install -y \
