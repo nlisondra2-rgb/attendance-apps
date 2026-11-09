@@ -1,0 +1,15 @@
+.git
+.github
+.env
+.env.*
+node_modules
+vendor
+public/build
+storage/*.key
+database/*.sqlite
+database/*.sqlite-journal
+tests
+.phpunit.result.cache
+ngrok.exe
+npm-debug.log
+

@@ -1,0 +1,53 @@
+services:
+  - type: web
+    name: attendance-app
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: APP_NAME
+        value: Attendance System
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        generateValue: true
+      - key: ADMIN_EMAIL
+        value: admin@events.com
+      - key: ADMIN_PASSWORD
+        value: bsis123
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: attendance-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: attendance-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: attendance-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: attendance-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: attendance-db
+          property: password
+      - key: SESSION_DRIVER
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: CACHE_STORE
+        value: database
+
+databases:
+  - name: attendance-db
+    plan: free
+    region: oregon

@@ -30,4 +30,14 @@ class Student extends Model
     {
         return $this->hasMany(Attendance::class);
     }
+
+    public function fines(): HasMany
+    {
+        return $this->hasMany(Fine::class);
+    }
+
+    public function excuses(): HasMany
+    {
+        return $this->hasMany(FineExcuse::class);
+    }
 }

@@ -7,6 +7,7 @@
     <title inertia><?php echo config('app.name', 'Laravel'); ?></title>
 
     <?php echo app('Illuminate\\Foundation\\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
+    <link rel="stylesheet" href="/css/style.css">
 
     <?php
         // If the Inertia head data is present, output it.

@@ -3,278 +3,467 @@
         <!-- Sidebar Overlay (mobile) -->
         <div class="sidebar-overlay" :class="{ show: isMobileMenuOpen }" @click="isMobileMenuOpen = false"></div>
 
-        <!-- Sidebar / Header -->
+        <!-- Sidebar -->
         <aside class="sidebar" :class="{ 'sidebar-open': isMobileMenuOpen }">
-            <!-- Mobile close btn -->
-            <div class="sidebar-close-row mobile-only">
-                <div class="sidebar-brand-logo">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-                    <span>Attendance</span>
-                </div>
-                <button class="sidebar-close-btn" @click="isMobileMenuOpen = false">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            <!-- Mobile close button -->
+            <div class="sidebar-mobile-close mobile-only">
+                <span class="mobile-brand-title">SNSU Portal</span>
+                <button class="sidebar-close-btn" @click="isMobileMenuOpen = false" aria-label="Close menu">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
 
-            <!-- Avatar Section -->
-            <div class="sidebar-header">
-                <div class="avatar-glow-ring">
-                    <div class="avatar-wrapper">
-                        <div class="avatar-gradient"></div>
-                        <div class="avatar-text">{{ studentInitials }}</div>
-                    </div>
+            <!-- University Brand -->
+            <div class="sidebar-brand">
+                <div class="brand-icon">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
                 </div>
-                <div class="sidebar-user-info">
-                    <h2>{{ studentName }}</h2>
-                    <p class="student-id">
-                        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c0 1.657 2.686 3 6 3s6-1.343 6-3"/></svg>
-                        {{ currentStudent.student_id }}
-                    </p>
-                    <div class="badge-row">
-                        <span class="badge course">{{ currentStudent.course }}</span>
-                        <span class="badge year">{{ currentStudent.year_level }}</span>
-                    </div>
+                <div class="brand-text">
+                    <span class="brand-name">SNSU</span>
+                    <span class="brand-sub">Student Portal</span>
                 </div>
             </div>
 
-            <!-- Divider -->
-            <div class="sidebar-divider"></div>
+            <!-- Compact Student Profile -->
+            <div class="student-profile-strip">
+                <div class="student-avatar">{{ studentInitials }}</div>
+                <div class="student-meta">
+                    <span class="student-name" :title="studentName">{{ studentName }}</span>
+                    <span class="student-id-text">{{ currentStudent?.student_id || '---' }}</span>
+                    <span class="student-course-text">{{ currentStudent?.course }} <template v-if="currentStudent?.year_level">• {{ currentStudent?.year_level }}</template></span>
+                </div>
+            </div>
 
-            <!-- Nav label -->
-            <p class="sidebar-nav-label">NAVIGATION</p>
-
+            <!-- Navigation Links -->
             <nav class="sidebar-nav">
-                <a href="#" :class="{ active: activeTab === 'dashboard' }" @click.prevent="activeTab = 'dashboard'; isMobileMenuOpen = false">
-                    <span class="nav-icon-wrap">
-                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/></svg>
-                    </span>
-                    <span class="nav-label">Dashboard</span>
-                    <span class="nav-arrow">›</span>
+                <a href="#" class="nav-link" :class="{ active: activeTab === 'dashboard' }" @click.prevent="activeTab = 'dashboard'; isMobileMenuOpen = false">
+                    <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/></svg>
+                    <span>Dashboard</span>
                 </a>
-                <a href="#" :class="{ active: activeTab === 'history' }" @click.prevent="activeTab = 'history'; isMobileMenuOpen = false">
-                    <span class="nav-icon-wrap">
-                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2M9 12h6M9 16h6"/></svg>
-                    </span>
-                    <span class="nav-label">Attendance History</span>
-                    <span class="nav-arrow">›</span>
+                <a href="#" class="nav-link" :class="{ active: activeTab === 'history' }" @click.prevent="activeTab = 'history'; isMobileMenuOpen = false">
+                    <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2M9 12h6M9 16h6"/></svg>
+                    <span>Attendance History</span>
+                </a>
+                <a href="#" class="nav-link" :class="{ active: activeTab === 'fines' }" @click.prevent="activeTab = 'fines'; isMobileMenuOpen = false">
+                    <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span>My Fines</span>
+                    <span v-if="outstandingBalance > 0" class="fine-badge">₱{{ Math.round(outstandingBalance) }}</span>
                 </a>
             </nav>
 
-            <div style="flex: 1"></div>
-
-            <!-- Logout -->
-            <div class="sidebar-footer">
-                <div class="sidebar-footer-divider"></div>
-                <button class="logout-btn-premium" @click="logoutModalOpen = true">
-                    <span class="nav-icon-wrap logout-icon">
-                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
-                    </span>
-                    <span>Logout</span>
+            <!-- Bottom Sign Out (Anchored, fits viewport without scrolling) -->
+            <div class="sidebar-bottom">
+                <button class="logout-link" @click="logoutModalOpen = true">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                    <span>Sign Out</span>
                 </button>
             </div>
         </aside>
 
-        <!-- Main Content -->
+        <!-- Main Content Area -->
         <main class="main-content">
-            <!-- Mobile Header -->
+            <!-- Mobile Header Bar -->
             <header class="mobile-header">
-                <button class="hamburger-btn" type="button" @click="isMobileMenuOpen = true">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                <button class="hamburger-btn" type="button" @click="isMobileMenuOpen = true" aria-label="Open menu">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
-                <span class="brand" style="font-weight: 700; color: white;">Student Portal</span>
+                <span class="mobile-header-title">SNSU Student Portal</span>
+                <span class="mobile-student-initial">{{ studentInitials }}</span>
             </header>
-            <div v-if="activeTab === 'dashboard'">
-                <!-- 1. Dashboard Header -->
-                <header class="content-header">
-                    <h1>Student Dashboard</h1>
-                    <p>Welcome back, <strong>{{ studentName }}</strong>! Here's your attendance summary.</p>
-                </header>
 
-                <!-- 2. Attendance Statistics — four cards in one row -->
-                <div class="stats-grid-premium">
-                    <div class="stat-card-premium">
-                        <div class="stat-icon blue">
-                            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <!-- ========================================================
+                 TAB 1: CLEAN HUMAN-STYLE DASHBOARD
+                 ======================================================== -->
+            <div v-if="activeTab === 'dashboard'" class="dashboard-body">
+                <!-- Page Header -->
+                <div class="dashboard-header">
+                    <div>
+                        <h1 class="page-title">Student Dashboard</h1>
+                        <p class="page-subtitle">Welcome back, <strong>{{ studentName }}</strong>. Here is your official attendance standing and event schedule.</p>
+                    </div>
+                </div>
+
+                <!-- 4 Statistics Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon-box blue">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                         </div>
-                        <div class="stat-content">
-                            <span class="label">Total Events</span>
-                            <span class="value">{{ totalEvents }}</span>
+                        <div class="stat-details">
+                            <span class="stat-label">Total Events</span>
+                            <span class="stat-value">{{ summaryStats.total_events }}</span>
                         </div>
                     </div>
-                    <div class="stat-card-premium">
-                        <div class="stat-icon green">
-                            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-box green">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
-                        <div class="stat-content">
-                            <span class="label">Attended</span>
-                            <span class="value">{{ eventsAttended }}</span>
-                        </div>
-                    </div>
-                    <div class="stat-card-premium">
-                        <div class="stat-icon red">
-                            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9l6 6m0-6l-6 6m12-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        </div>
-                        <div class="stat-content">
-                            <span class="label">Absent</span>
-                            <span class="value">{{ eventsAbsent }}</span>
+                        <div class="stat-details">
+                            <span class="stat-label">Attended</span>
+                            <span class="stat-value">{{ summaryStats.events_attended }}</span>
                         </div>
                     </div>
-                    <div class="stat-card-premium">
-                        <div class="stat-icon purple">
-                            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-box red">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
-                        <div class="stat-content">
-                            <span class="label">Attendance Rate</span>
-                            <span class="value">{{ attendanceRate }}</span>
+                        <div class="stat-details">
+                            <span class="stat-label">Absent</span>
+                            <span class="stat-value">{{ summaryStats.events_absent }}</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-box purple">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                        </div>
+                        <div class="stat-details">
+                            <span class="stat-label">Attendance Rate</span>
+                            <div class="stat-value-row">
+                                <span class="stat-value" :class="isGoodStanding ? 'text-green' : 'text-red'">{{ numericAttendanceRate }}%</span>
+                                <span class="stat-rate-sub" :class="isGoodStanding ? 'tag-green' : 'tag-amber'">
+                                    {{ isGoodStanding ? 'Passing' : 'Below 80%' }}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 3. Attendance Alert — directly below stats, conditional -->
-                <div v-if="totalEvents > 0 && eventsAttended / totalEvents < 0.8" class="alert-banner">
-                    <span class="alert-icon">⚠️</span>
-                    <span><strong>Attendance Alert:</strong> Your current attendance rate is below the required 80% threshold. Please attend upcoming events.</span>
+                <!-- Clean Official University Alerts (Only when applicable) -->
+                <!-- Attendance Rate Warning -->
+                <div v-if="summaryStats.is_rate_warning" class="clean-alert alert-warning">
+                    <div class="alert-icon">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                    </div>
+                    <div class="alert-text">
+                        <strong>Attendance Warning:</strong> Your current attendance rate is <strong>{{ numericAttendanceRate }}%</strong>, which is below the required 80% threshold. Please attend upcoming university events to maintain good standing.
+                    </div>
                 </div>
 
-                <!-- 4. Main Dashboard Section: Event Hub (left) + Attendance Progress (right) -->
-                <div class="dashboard-two-col">
-                    <!-- LEFT: Event Hub -->
-                    <section class="section-card event-hub-card">
-                        <div class="section-header">
-                            <h2>Event Hub</h2>
-                            <div class="hub-tabs">
-                                <button :class="['hub-tab', { active: eventHubTab === 'active' }]" @click="eventHubTab = 'active'">
-                                    Active <span class="hub-badge">{{ availableEvents.length }}</span>
-                                </button>
-                                <button :class="['hub-tab', { active: eventHubTab === 'upcoming' }]" @click="eventHubTab = 'upcoming'">
-                                    Upcoming <span class="hub-badge neutral">{{ upcomingEvents.length }}</span>
-                                </button>
-                            </div>
-                        </div>
+                <!-- Outstanding Fines Alert -->
+                <div v-if="outstandingBalance > 0" class="clean-alert alert-danger">
+                    <div class="alert-icon">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <div class="alert-text">
+                        <strong>Outstanding Balance:</strong> You have an unsettled penalty balance of <strong>₱{{ outstandingBalance.toFixed(2) }}</strong>. Settle at the University Cashier.
+                        <a href="#" @click.prevent="activeTab = 'fines'" class="alert-link">View Fines →</a>
+                    </div>
+                </div>
 
-                        <div v-if="eventHubTab === 'active'">
-                            <div v-if="availableEvents.length === 0" class="hub-empty">
-                                <svg width="36" height="36" fill="none" stroke="#93c5fd" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                <p>You're all caught up! No active events right now.</p>
-                                <button class="hub-action-btn" @click="activeTab = 'history'">View Past Events</button>
-                            </div>
-                            <div v-else>
-                                <label class="test-mode-toggle"><input type="checkbox" v-model="testModeEnabled" /> <span>Test Mode</span></label>
-                                <div v-for="ev in availableEvents" :key="ev.id" class="hub-event-row">
-                                    <div class="hub-event-info">
-                                        <strong>{{ ev.name }}</strong>
-                                        <span>{{ formatEventDate(ev.date) }} · {{ formatEventTime(ev) }}</span>
-                                    </div>
-                                    <button class="hub-checkin-btn" @click="testModeEnabled ? openTestCheckin(ev) : openQrScanner(ev.id)" :disabled="loading">
-                                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
-                                        {{ loading ? '...' : 'Check In' }}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div v-if="eventHubTab === 'upcoming'">
-                            <div v-if="upcomingEvents.length === 0" class="hub-empty">
-                                <svg width="36" height="36" fill="none" stroke="#93c5fd" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                <p>No upcoming events scheduled for your year level.</p>
-                                <button class="hub-action-btn" @click="activeTab = 'history'">View Past Events</button>
-                            </div>
-                            <div v-else>
-                                <div v-for="ev in upcomingEvents" :key="ev.id" class="hub-event-row">
-                                    <div class="hub-event-info">
-                                        <strong>{{ ev.name }}</strong>
-                                        <span>{{ formatEventDate(ev.date) }} · {{ formatEventTime(ev) }}</span>
-                                    </div>
-                                    <button class="details-btn" @click="showEventDetails(ev)">Details</button>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- RIGHT: Attendance Progress -->
-                    <section class="section-card progress-card">
-                        <div class="rate-header">
+                <!-- Two-Column Layout: Events (Left) + Attendance Overview (Right) -->
+                <div class="dashboard-grid">
+                    <!-- Left Column: Event Hub -->
+                    <div class="content-box event-hub-box">
+                        <div class="box-header">
                             <div>
-                                <h2>Attendance Progress</h2>
-                                <p class="section-caption">Your attendance at a glance</p>
+                                <h2 class="box-title">University Events</h2>
+                                <p class="box-subtitle">Official schedule & attendance verification</p>
                             </div>
-                            <span class="rate-value" :style="{ color: isGoodAttendance ? '#10b981' : '#ef4444' }">{{ attendanceRate }}</span>
+                            <div class="tab-pill-group">
+                                <button :class="['tab-pill', { active: eventHubTab === 'ongoing' }]" @click="eventHubTab = 'ongoing'">
+                                    Ongoing ({{ categorizedEvents.ongoing.length }})
+                                </button>
+                                <button :class="['tab-pill', { active: eventHubTab === 'upcoming' }]" @click="eventHubTab = 'upcoming'">
+                                    Upcoming ({{ categorizedEvents.upcoming.length }})
+                                </button>
+                                <button :class="['tab-pill', { active: eventHubTab === 'past' }]" @click="eventHubTab = 'past'">
+                                    Past ({{ categorizedEvents.past.length }})
+                                </button>
+                            </div>
                         </div>
-                        <div class="rate-bar-track">
-                            <div class="rate-bar-fill" :style="{ width: attendanceRate, background: isGoodAttendance ? 'linear-gradient(90deg,#10b981,#34d399)' : 'linear-gradient(90deg,#ef4444,#f87171)' }"></div>
+
+                        <!-- ONGOING TAB -->
+                        <div v-if="eventHubTab === 'ongoing'">
+                            <div v-if="categorizedEvents.ongoing.length === 0" class="empty-state-clean">
+                                <svg width="32" height="32" fill="none" stroke="#94a3b8" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                <p>No events are currently taking place right now.</p>
+                                <button class="btn-clean-link" @click="eventHubTab = 'upcoming'">Check Upcoming Events →</button>
+                            </div>
+
+                            <div v-else class="event-rows">
+                                <div v-for="ev in categorizedEvents.ongoing" :key="ev.id" class="event-row ongoing-row">
+                                    <div class="event-row-main">
+                                        <div class="event-name-line">
+                                            <strong class="event-title">{{ ev.name }}</strong>
+                                            <span class="badge-live">In Session</span>
+                                        </div>
+                                        <div class="event-meta-line">
+                                            <span>{{ formatEventDate(ev.date) }} · {{ formatEventTime(ev) }}</span>
+                                            <span v-if="ev.venue">· 📍 {{ ev.venue }}</span>
+                                            <span v-if="ev.deadline" class="deadline-text">· Deadline: {{ formatTime(ev.deadline) }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="event-row-actions">
+                                        <span v-if="ev.my_attendance?.status === 'present'" class="badge-status present">✓ Checked In</span>
+                                        <button v-else-if="ev.is_checkin_open" class="btn-checkin" @click="testModeEnabled ? openTestCheckin(ev) : openQrScanner(ev.id)" :disabled="loading">
+                                            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+                                            Check In
+                                        </button>
+                                        <span v-else-if="ev.checkin_status === 'deadline_passed'" class="badge-status closed">Deadline Passed</span>
+                                        <button class="btn-outline-sm" @click="showEventDetails(ev)">Details</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="rate-legend">
-                            <span><i class="legend-dot present-dot"></i> Present: {{ eventsAttended }}</span>
-                            <span><i class="legend-dot absent-dot"></i> Absent: {{ eventsAbsent }}</span>
+
+                        <!-- UPCOMING TAB -->
+                        <div v-if="eventHubTab === 'upcoming'">
+                            <div v-if="categorizedEvents.upcoming.length === 0" class="empty-state-clean">
+                                <p>No upcoming events scheduled for your program and year level.</p>
+                            </div>
+                            <div v-else class="event-rows">
+                                <div v-for="ev in categorizedEvents.upcoming" :key="ev.id" class="event-row">
+                                    <div class="event-row-main">
+                                        <strong class="event-title">{{ ev.name }}</strong>
+                                        <div class="event-meta-line">
+                                            <span>{{ formatEventDate(ev.date) }} · {{ formatEventTime(ev) }}</span>
+                                            <span v-if="ev.venue">· 📍 {{ ev.venue }}</span>
+                                            <span v-if="ev.fine_amount > 0" class="fine-note">· Absence Fine: ₱{{ ev.fine_amount.toFixed(2) }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="event-row-actions">
+                                        <span class="badge-status neutral">Scheduled</span>
+                                        <button class="btn-outline-sm" @click="showEventDetails(ev)">Details</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </section>
+
+                        <!-- PAST TAB -->
+                        <div v-if="eventHubTab === 'past'">
+                            <div v-if="categorizedEvents.past.length === 0" class="empty-state-clean">
+                                <p>No past events recorded yet.</p>
+                            </div>
+                            <div v-else class="event-rows">
+                                <div v-for="ev in categorizedEvents.past" :key="ev.id" class="event-row">
+                                    <div class="event-row-main">
+                                        <strong class="event-title">{{ ev.name }}</strong>
+                                        <div class="event-meta-line">
+                                            <span>{{ formatEventDate(ev.date) }} · {{ formatEventTime(ev) }}</span>
+                                            <span v-if="ev.venue">· {{ ev.venue }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="event-row-actions">
+                                        <span class="badge-status" :class="ev.my_attendance?.status || 'absent'">
+                                            {{ ev.my_attendance?.status === 'present' ? '✓ Present' : (ev.my_attendance?.status === 'excused' ? 'Excused' : '✗ Absent') }}
+                                        </span>
+                                        <button class="btn-outline-sm" @click="showEventDetails(ev)">Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Attendance Overview -->
+                    <div class="content-box attendance-overview-box">
+                        <div class="box-header">
+                            <div>
+                                <h2 class="box-title">Attendance Overview</h2>
+                                <p class="box-subtitle">Real-time completion metric</p>
+                            </div>
+                        </div>
+
+                        <div class="rate-display-row">
+                            <span class="rate-large" :class="isGoodStanding ? 'text-green' : 'text-red'">{{ numericAttendanceRate }}%</span>
+                            <span class="rate-target-label">Requirement: <strong>80.0%</strong></span>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div class="progress-bar-track">
+                            <div class="progress-bar-fill" :class="isGoodStanding ? 'fill-green' : 'fill-red'" :style="{ width: attendanceProgressWidth + '%' }"></div>
+                        </div>
+
+                        <!-- Attendance Statistics Breakdown Table -->
+                        <div class="breakdown-list">
+                            <div class="breakdown-row">
+                                <span class="breakdown-label"><i class="dot dot-green"></i> Attended Events</span>
+                                <span class="breakdown-value">{{ summaryStats.events_attended }}</span>
+                            </div>
+                            <div class="breakdown-row">
+                                <span class="breakdown-label"><i class="dot dot-red"></i> Absent Sessions</span>
+                                <span class="breakdown-value">{{ summaryStats.events_absent }}</span>
+                            </div>
+                            <div class="breakdown-row" v-if="summaryStats.events_excused > 0">
+                                <span class="breakdown-label"><i class="dot dot-purple"></i> Excused Absences</span>
+                                <span class="breakdown-value">{{ summaryStats.events_excused }}</span>
+                            </div>
+                            <div class="breakdown-row total-row">
+                                <span class="breakdown-label">Total Required Events</span>
+                                <span class="breakdown-value">{{ summaryStats.total_events }}</span>
+                            </div>
+                        </div>
+
+                        <div class="policy-note">
+                            Students must maintain at least 80% attendance to secure academic clearance and avoid institutional fines.
+                        </div>
+                    </div>
                 </div>
 
-                <!-- 5. Recent Attendance — full-width below main section -->
-                <section class="section-card recent-section-full">
-                    <div class="section-header">
+                <!-- Bottom Full-Width: Recent Attendance Records -->
+                <div class="content-box">
+                    <div class="box-header">
                         <div>
-                            <h2>Recent Attendance</h2>
-                            <p class="section-caption">Your latest event records</p>
+                            <h2 class="box-title">Recent Attendance Records</h2>
+                            <p class="box-subtitle">Your latest logged event attendances</p>
                         </div>
-                        <button class="text-link" @click="activeTab = 'history'">View All →</button>
+                        <button class="btn-text-link" @click="activeTab = 'history'">View Full History →</button>
                     </div>
-                    <div v-if="recentAttendance.length" class="recent-table-wrap">
-                        <table class="history-table recent-table">
+
+                    <div v-if="attendances.length > 0" class="table-container">
+                        <table class="standard-table">
                             <thead>
                                 <tr>
-                                    <th>Event Name</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Status</th>
+                                    <th>REF</th>
+                                    <th>EVENT</th>
+                                    <th>AMOUNT</th>
+                                    <th>DATE</th>
+                                    <th>STATUS</th>
+                                    <th>ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="row in recentAttendance" :key="row.id">
-                                    <td class="font-bold" style="text-transform: capitalize;">{{ row.name }}</td>
-                                    <td>{{ formatEventDate(row.date) }}</td>
-                                    <td>{{ formatEventTime(row) }}</td>
-                                    <td><span class="status-badge" :class="row.attendance?.status || 'absent'">{{ row.attendance?.status === 'present' ? '✓ Present' : '✗ Absent' }}</span></td>
+                                <tr v-for="fine in studentFines" :key="fine.id">
+                                    <td style="font-family: monospace; font-size: 0.82rem;">{{ fine.reference_no }}</td>
+                                    <td><strong>{{ fine.event?.name || 'General Event' }}</strong></td>
+                                    <td>₱{{ Number(fine.amount).toFixed(2) }}</td>
+                                    <td>{{ formatEventDate(fine.issue_date) }}</td>
+                                    <td>
+                                        <span class="badge-status" :class="fine.payment_status === 'paid' ? 'present' : 'absent'">
+                                            {{ fine.payment_status === 'paid' ? 'PAID' : 'UNPAID' }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button v-if="fine.payment_status === 'paid'" class="btn-delete-sm" @click="deletePaidFine(fine)">
+                                            Delete
+                                        </button>
+                                        <span v-else class="text-muted">—</span>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div v-else class="compact-empty">Attendance records will appear here after events.</div>
-                </section>
+                    <div v-else class="empty-state-clean">
+                        <p>No verified attendance records have been registered yet.</p>
+                    </div>
+                </div>
             </div>
 
-            <!-- History Tab -->
-            <div v-if="activeTab === 'history'">
-                <header class="content-header">
-                    <h1>Attendance History</h1>
-                    <p>View all your past event attendances.</p>
-                </header>
+            <!-- ========================================================
+                 TAB 2: ATTENDANCE HISTORY
+                 ======================================================== -->
+            <div v-if="activeTab === 'history'" class="dashboard-body">
+                <div class="dashboard-header">
+                    <div>
+                        <h1 class="page-title">Attendance History</h1>
+                        <p class="page-subtitle">Historical archive of all scheduled events and your attendance status.</p>
+                    </div>
+                </div>
 
-                <div class="section-card">
-                    <div v-if="historyEvents.length === 0" class="empty-state">
+                <div class="content-box">
+                    <div v-if="historyEvents.length === 0" class="empty-state-clean">
                         <p>No attendance records found yet.</p>
                     </div>
-
-                    <div v-else class="history-table-wrapper">
-                        <table class="history-table">
+                    <div v-else class="table-container">
+                        <table class="standard-table">
                             <thead>
                                 <tr>
                                     <th>Event Name</th>
                                     <th>Date</th>
+                                    <th>Venue</th>
                                     <th>Status</th>
-                                    <th>Checked In</th>
+                                    <th>Check-in Time</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="row in historyEvents" :key="row.id">
-                                    <td class="font-bold">{{ row.name }}</td>
+                                    <td><strong>{{ row.name }}</strong></td>
                                     <td>{{ formatEventDate(row.date) }}</td>
+                                    <td>{{ row.venue || 'Campus Main' }}</td>
                                     <td>
-                                        <span class="status-badge" :class="row.attendance?.status || 'absent'">
-                                            {{ row.attendance?.status || 'absent' }}
+                                        <span class="badge-status" :class="row.attendance?.status || 'absent'">
+                                            {{ row.attendance?.status === 'present' ? '✓ Present' : (row.attendance?.status === 'excused' ? 'Excused' : '✗ Absent') }}
                                         </span>
                                     </td>
                                     <td>{{ formatDateTime(row.attendance?.checked_in_at) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================
+                 TAB 3: MY FINES
+                 ======================================================== -->
+            <div v-if="activeTab === 'fines'" class="dashboard-body">
+                <div class="dashboard-header">
+                    <div>
+                        <h1 class="page-title">My Fines</h1>
+                        <p class="page-subtitle">Official assessment records for missed events.</p>
+                    </div>
+                </div>
+
+                <!-- Clean Fine Summary Cards -->
+                <div class="fine-summary-grid">
+                    <div class="content-box fine-total-box">
+                        <span class="fine-box-label">Outstanding Balance</span>
+                        <div class="fine-box-amount">₱{{ outstandingBalance.toFixed(2) }}</div>
+                        <p class="fine-box-sub">Payable amount for unexcused absences.</p>
+                    </div>
+                    <div class="content-box fine-guide-box">
+                        <strong class="guide-title">Cashier Payment Instructions</strong>
+                        <p class="guide-text">
+                            Settle payments directly at the <strong>University Cashier</strong>. Present your <strong>Student ID</strong> and the corresponding <strong>Reference Number</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="content-box" style="margin-top: 1rem;">
+                    <div class="box-header">
+                        <div>
+                            <h2 class="box-title">Fine Assessments</h2>
+                            <p class="box-subtitle">Official penalty records</p>
+                        </div>
+                    </div>
+
+                    <div v-if="studentFines.length === 0" class="empty-state-clean">
+                        <svg width="32" height="32" fill="none" stroke="#10b981" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <p style="margin-top:0.5rem;font-weight:600;color:#0f172a;">No Fines on Record</p>
+                        <p style="color:#64748b;font-size:0.85rem;">You have zero outstanding penalties.</p>
+                    </div>
+
+                    <div v-else class="table-container">
+                        <table class="standard-table">
+                            <thead>
+                                <tr>
+                                    <th>REF</th>
+                                    <th>EVENT</th>
+                                    <th>AMOUNT</th>
+                                    <th>DATE</th>
+                                    <th>STATUS</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="fine in studentFines" :key="fine.id">
+                                    <td style="font-family: monospace; font-size: 0.82rem;">{{ fine.reference_no }}</td>
+                                    <td><strong>{{ fine.event?.name || 'General Event' }}</strong></td>
+                                    <td>₱{{ Number(fine.amount).toFixed(2) }}</td>
+                                    <td>{{ formatEventDate(fine.issue_date) }}</td>
+                                    <td>
+                                        <span class="badge-status" :class="fine.payment_status === 'paid' ? 'present' : 'absent'">
+                                            {{ fine.payment_status === 'paid' ? 'PAID' : 'UNPAID' }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button v-if="fine.payment_status === 'paid'" class="btn-delete-sm" @click="deletePaidFine(fine)">
+                                            Delete
+                                        </button>
+                                        <span v-else class="text-muted">—</span>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -285,70 +474,87 @@
 
         <!-- Notification Toast -->
         <Transition name="toast">
-            <div v-if="successMessage" class="toast-notification">
+            <div v-if="successMessage" class="toast-box">
                 {{ successMessage }}
             </div>
         </Transition>
 
-        <!-- Logout Confirmation Modal -->
-        <div v-if="logoutModalOpen" class="qr-modal" @click.self="logoutModalOpen = false">
-            <div class="qr-modal-inner">
-                <h3 style="margin-bottom: 1rem; color: var(--slate-900); font-weight: 700;">Confirm Logout</h3>
-                <p style="margin-bottom: 1.5rem; color: var(--slate-500); font-size: 0.95rem;">Are you sure you want to logout? Your current student session will be ended.</p>
-                <div style="display: flex; gap: 1rem; justify-content: center;">
-                    <button class="btn" style="background: var(--slate-200); color: var(--slate-700); padding: 0.6rem 1.25rem; border-radius: 6px; font-weight: 600; border: none; cursor: pointer;" @click="logoutModalOpen = false">Cancel</button>
-                    <button class="btn btn-primary" style="background: var(--red); color: white; border: none; padding: 0.6rem 1.25rem; border-radius: 6px; font-weight: 600; cursor: pointer;" @click="logoutStudent">Logout</button>
+        <!-- Event Details Modal -->
+        <div v-if="eventDetailsModal.isOpen" class="clean-modal-backdrop" @click.self="eventDetailsModal.isOpen = false">
+            <div class="clean-modal-dialog">
+                <div class="modal-title-row">
+                    <h3>{{ eventDetailsModal.event?.name }}</h3>
+                    <button class="btn-close" @click="eventDetailsModal.isOpen = false">✕</button>
+                </div>
+                <p class="event-desc">{{ eventDetailsModal.event?.description || 'No additional description provided.' }}</p>
+                <div class="event-details-grid">
+                    <div><strong>Date:</strong> {{ formatEventDate(eventDetailsModal.event?.date) }}</div>
+                    <div><strong>Time:</strong> {{ formatEventTime(eventDetailsModal.event) }}</div>
+                    <div><strong>Venue:</strong> {{ eventDetailsModal.event?.venue || 'Campus Main' }}</div>
+                    <div><strong>Check-in Deadline:</strong> {{ formatTime(eventDetailsModal.event?.deadline) }} ({{ eventDetailsModal.event?.grace_period_minutes || 0 }} min grace period)</div>
+                    <div v-if="eventDetailsModal.event?.fine_amount > 0"><strong>Absence Fine:</strong> ₱{{ eventDetailsModal.event?.fine_amount.toFixed(2) }}</div>
+                </div>
+                <div class="modal-btn-row" style="margin-top: 1.25rem;">
+                    <button class="btn-submit" @click="eventDetailsModal.isOpen = false">Close</button>
                 </div>
             </div>
         </div>
-        <!-- Alert Modal -->
-        <div v-if="alertModal.isOpen" class="qr-modal">
-            <div class="qr-modal-inner">
-                <h3 style="margin-bottom: 1rem; color: var(--slate-900); font-weight: 700;">{{ alertModal.title }}</h3>
-                <p style="margin-bottom: 1.5rem; color: var(--slate-500); font-size: 0.95rem;">{{ alertModal.message }}</p>
-                <div style="display: flex; gap: 1rem; justify-content: center;">
-                    <button class="btn btn-primary" style="background: var(--navy); color: white; border: none; min-width: 100px; padding: 0.75rem 1.5rem; border-radius: var(--radius-sm);" @click="alertModal.isOpen = false">OK</button>
+
+        <!-- Logout Confirmation Modal -->
+        <div v-if="logoutModalOpen" class="clean-modal-backdrop" @click.self="logoutModalOpen = false">
+            <div class="clean-modal-dialog" style="max-width: 380px; text-align: center;">
+                <h3 style="margin-bottom: 0.5rem; color: #0f172a;">Confirm Sign Out</h3>
+                <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 1.25rem;">Are you sure you want to end your current session?</p>
+                <div class="modal-btn-row" style="justify-content: center;">
+                    <button class="btn-cancel" @click="logoutModalOpen = false">Cancel</button>
+                    <button class="btn-danger" @click="logoutStudent">Sign Out</button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Alert Modal -->
+        <div v-if="alertModal.isOpen" class="clean-modal-backdrop">
+            <div class="clean-modal-dialog" style="max-width: 400px; text-align: center;">
+                <h3 style="margin-bottom: 0.5rem; color: #0f172a;">{{ alertModal.title }}</h3>
+                <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 1.25rem;">{{ alertModal.message }}</p>
+                <button class="btn-submit" style="width: 100%;" @click="alertModal.isOpen = false">OK</button>
             </div>
         </div>
 
         <!-- QR Scanner Modal -->
-        <div v-if="qrModalOpen" class="qr-modal">
-            <div class="qr-modal-inner">
-                <h3 style="margin-bottom: 1rem;">Scan Event QR Code</h3>
-                <div class="scanner-container" style="background: black; position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 1; margin-bottom: 1rem;">
-                    <video ref="qrVideo" style="width: 100%; height: 100%; object-fit: cover;" autoplay playsinline></video>
-                    
-                    <div v-if="qrError" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); color: white; padding: 1rem; text-align: center;">
-                        <p>Camera access denied or unavailable. Please check your browser permissions.</p>
-                    </div>
-
-                    <div v-if="isVerifying" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); color: white; flex-direction: column; gap: 1rem;">
-                        <div class="spinner"></div>
-                        <p style="font-weight: 600;">Verifying GPS Location...</p>
-                    </div>
+        <div v-if="qrModalOpen" class="clean-modal-backdrop">
+            <div class="clean-modal-dialog" style="max-width: 440px;">
+                <div class="modal-title-row">
+                    <h3>Scan Event QR Code</h3>
+                    <button class="btn-close" @click="closeQrScanner">✕</button>
                 </div>
-                <div style="display: flex; gap: 1rem; justify-content: center;">
-                    <label class="qr-upload-btn">Upload QR Image<input type="file" accept="image/*" @change="handleQrImageUpload" hidden /></label>
-                    <button class="btn btn-outline" style="border: 1px solid #cbd5e1; padding: 0.75rem 1.5rem; border-radius: 8px; background: white; cursor: pointer;" @click="closeQrScanner">Cancel</button>
+                <div class="scanner-frame">
+                    <video ref="qrVideo" class="scanner-video" autoplay playsinline></video>
+                    <div v-if="qrError" class="scanner-status-overlay">Camera unavailable. Please check permissions or upload an image.</div>
+                    <div v-if="isVerifying" class="scanner-status-overlay">Verifying attendance and GPS location...</div>
                 </div>
-                <p class="qr-help">Use the active event QR code from the administrator. Student ID QR codes cannot be used for attendance.</p>
+                <div class="scanner-btn-row">
+                    <label class="btn-upload">Upload QR Image<input type="file" accept="image/*" @change="handleQrImageUpload" hidden /></label>
+                    <button class="btn-cancel" @click="closeQrScanner">Cancel</button>
+                </div>
+                <p class="scanner-help-text">Scan the official event QR code displayed by the event coordinator.</p>
             </div>
         </div>
+
         <!-- Test Mode Check-in Modal -->
-        <div v-if="testModalOpen" class="qr-modal">
-            <div class="qr-modal-inner">
-                <h3 style="margin-bottom: 1rem;">Developer Test Mode</h3>
-                <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;">
-                    Bypass the camera and GPS. Check the Admin Dashboard for the Event's active QR Token and paste it below.
-                </p>
-                <div style="margin-bottom: 1.5rem;">
-                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">QR Token String:</label>
-                    <input type="text" v-model="testTokenInput" placeholder="Paste the long token string here" style="width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 8px; outline: none; font-family: monospace;" />
+        <div v-if="testModalOpen" class="clean-modal-backdrop">
+            <div class="clean-modal-dialog" style="max-width: 440px;">
+                <div class="modal-title-row">
+                    <h3>Developer Test Mode</h3>
+                    <button class="btn-close" @click="testModalOpen = false">✕</button>
                 </div>
-                <div style="display: flex; gap: 1rem; justify-content: center;">
-                    <button class="btn btn-outline" style="border: 1px solid #cbd5e1; padding: 0.75rem 1.5rem; border-radius: 8px; background: white; cursor: pointer;" @click="testModalOpen = false">Cancel</button>
-                    <button class="btn btn-primary" style="background: #10b981; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600;" @click="submitTestCheckin">Submit</button>
+                <div class="form-group">
+                    <label>QR Token</label>
+                    <input type="text" v-model="testTokenInput" class="form-input" placeholder="Paste event QR token string" />
+                </div>
+                <div class="modal-btn-row">
+                    <button class="btn-cancel" @click="testModalOpen = false">Cancel</button>
+                    <button class="btn-submit" @click="submitTestCheckin">Submit</button>
                 </div>
             </div>
         </div>
@@ -363,7 +569,7 @@ const loading = ref(false);
 const activeTab = ref('dashboard');
 const logoutModalOpen = ref(false);
 const isMobileMenuOpen = ref(false);
-const eventHubTab = ref('active');
+const eventHubTab = ref('ongoing');
 
 const alertModal = ref({
     isOpen: false,
@@ -380,7 +586,25 @@ function showAlert(message, title = 'Notice') {
 const currentStudent = ref(null);
 const events = ref([]);
 const attendances = ref([]);
+const studentFines = ref([]);
+const outstandingBalance = ref(0);
 const successMessage = ref('');
+
+const summaryStats = ref({
+    total_events: 0,
+    events_attended: 0,
+    events_absent: 0,
+    events_excused: 0,
+    attendance_rate: '0%',
+    is_rate_warning: false
+});
+
+const categorizedEvents = ref({
+    upcoming: [],
+    ongoing: [],
+    past: [],
+    all: []
+});
 
 const qrModalOpen = ref(false);
 const qrError = ref(false);
@@ -390,11 +614,44 @@ const isVerifying = ref(false);
 let qrStream = null;
 let qrAnimationId = null;
 
-// Test Mode State
+// Developer Test Mode
 const testModeEnabled = ref(false);
 const testModalOpen = ref(false);
 const testTokenInput = ref('');
 const testEvent = ref(null);
+
+
+
+// Event Details Modal State
+const eventDetailsModal = ref({
+    isOpen: false,
+    event: null
+});
+
+// Computed properties
+const numericAttendanceRate = computed(() => {
+    const raw = summaryStats.value.attendance_rate;
+    if (typeof raw === 'number') return Math.round(raw);
+    const parsed = parseFloat(String(raw).replace('%', ''));
+    return isNaN(parsed) ? 0 : Math.round(parsed);
+});
+
+const attendanceProgressWidth = computed(() => {
+    return Math.min(100, Math.max(0, numericAttendanceRate.value));
+});
+
+const isGoodStanding = computed(() => {
+    return numericAttendanceRate.value >= 80;
+});
+
+const isGoodAttendance = computed(() => {
+    return !summaryStats.value.is_rate_warning;
+});
+
+const studentName = computed(() => currentStudent.value?.name || 'Student');
+const studentInitials = computed(() => {
+    return studentName.value.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'ST';
+});
 
 function ensureExternalScript(src) {
     return new Promise((resolve, reject) => {
@@ -431,93 +688,92 @@ function logoutStudent() {
 
 async function loadStudentData(studentId) {
     try {
-        const [student, eventsData, attendancesData] = await Promise.all([
+        const [student, attendancesData, summaryData, finesData, eventsCategorized] = await Promise.all([
             apiRequest(`/api/students/${encodeURIComponent(studentId)}`),
-            apiRequest('/api/events'),
             apiRequest(`/api/attendances?student_id=${encodeURIComponent(studentId)}`),
+            apiRequest(`/api/students/${encodeURIComponent(studentId)}/attendance-summary`),
+            apiRequest(`/api/students/${encodeURIComponent(studentId)}/fines`),
+            apiRequest(`/api/students/${encodeURIComponent(studentId)}/events`)
         ]);
 
         currentStudent.value = student;
-        events.value = Array.isArray(eventsData) ? eventsData : [];
         attendances.value = Array.isArray(attendancesData) ? attendancesData : [];
+
+        if (summaryData) {
+            summaryStats.value = summaryData;
+        }
+
+        if (finesData) {
+            studentFines.value = finesData.fines || [];
+            outstandingBalance.value = finesData.outstanding_balance || 0;
+        }
+
+        if (eventsCategorized) {
+            categorizedEvents.value = {
+                upcoming: eventsCategorized.upcoming || [],
+                ongoing: eventsCategorized.ongoing || [],
+                past: eventsCategorized.past || [],
+                all: eventsCategorized.all || []
+            };
+        }
+
         ready.value = true;
     } catch {
         logoutStudent();
     }
 }
 
-// Filtered events for the student's year level
-const filteredEvents = computed(() => {
-    const studentYear = currentStudent.value?.year_level || '';
-    return [...events.value].filter(ev => {
-        if (!ev.target_year_level || ev.target_year_level === 'All') return true;
-        return ev.target_year_level === studentYear;
-    });
-});
-
-// Currently open events for check-in
-const availableEvents = computed(() => {
-    return filteredEvents.value.filter(ev => {
-        const { now, start, end } = eventWindow(ev);
-        const attended = attendanceForEvent(ev.id);
-        return now >= start && now <= end && attended?.status !== 'present';
-    });
-});
-
-// History of all events for this student's year
+// History of all events for this student
 const historyEvents = computed(() => {
-    return filteredEvents.value.map(ev => ({
+    return categorizedEvents.value.all.map(ev => ({
         ...ev,
-        attendance: attendanceForEvent(ev.id)
+        attendance: attendances.value.find(a => a?.event?.id === ev.id)
     })).sort((a, b) => new Date(b.date) - new Date(a.date));
 });
 
-const completedEvents = computed(() => filteredEvents.value.filter(ev => eventWindow(ev).end < new Date()));
-const totalEvents = computed(() => completedEvents.value.length);
-const eventsAttended = computed(() => completedEvents.value.filter(ev => attendanceForEvent(ev.id)?.status === 'present').length);
-const eventsAbsent = computed(() => Math.max(0, totalEvents.value - eventsAttended.value));
-const recentAttendance = computed(() => historyEvents.value.filter(row => row.attendance).slice(0, 5));
-const upcomingEvents = computed(() => filteredEvents.value.filter(ev => {
-    const { now, start } = eventWindow(ev);
-    return start > now;
-}).sort((a, b) => new Date(a.date) - new Date(b.date)).slice(0, 5));
-const attendanceChartStyle = computed(() => ({
-    '--present-angle': `${totalEvents.value ? eventsAttended.value / totalEvents.value * 100 : 0}%`,
-}));
-const isGoodAttendance = computed(() => totalEvents.value > 0 && eventsAttended.value / totalEvents.value >= 0.8);
-const attendanceRate = computed(() => {
-    if (totalEvents.value === 0) return '0%';
-    return `${Math.round((eventsAttended.value / totalEvents.value) * 100)}%`;
-});
-
-const studentName = computed(() => currentStudent.value?.name || '');
-const studentInitials = computed(() => {
-    return studentName.value.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'ST';
-});
-
-function formatEventDate(dateStr) { return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); }
-function formatDay(dateStr) { return new Date(dateStr).toLocaleDateString('en-US', { day: '2-digit' }); }
-function formatMonth(dateStr) { return new Date(dateStr).toLocaleDateString('en-US', { month: 'short' }); }
-function formatCheckInTime(isoStr) { return isoStr ? new Date(isoStr).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : '---'; }
-function showEventDetails(ev) {
-    const details = [formatEventDate(ev.date), formatEventTime(ev), ev.venue || 'Location not specified'].join(' · ');
-    showAlert(details, ev.name || 'Event Details');
+function formatEventDate(dateStr) {
+    if (!dateStr) return '---';
+    return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
-function formatDateTime(isoStr) { if (!isoStr) return '---'; return new Date(isoStr).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', month: 'short', day: 'numeric' }); }
+function formatTime(isoStr) {
+    if (!isoStr) return '---';
+    return new Date(isoStr).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+}
+function formatCheckInTime(isoStr) {
+    return isoStr ? new Date(isoStr).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : '---';
+}
+function formatDateTime(isoStr) {
+    if (!isoStr) return '---';
+    return new Date(isoStr).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', month: 'short', day: 'numeric' });
+}
 function formatEventTime(ev) {
-    if (!ev.starts_at) return 'All Day';
+    if (!ev || !ev.starts_at) return 'All Day';
     const s = new Date(ev.starts_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    const e = new Date(ev.ends_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    return `${s} - ${e}`;
+    const e = ev.ends_at ? new Date(ev.ends_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+    return e ? `${s} - ${e}` : s;
 }
 
-function attendanceForEvent(eventId) { return attendances.value.find(a => a?.event?.id === eventId); }
+function showEventDetails(ev) {
+    eventDetailsModal.value.event = ev;
+    eventDetailsModal.value.isOpen = true;
+}
 
-function eventWindow(ev) {
-    const now = new Date();
-    const start = ev.starts_at ? new Date(ev.starts_at) : new Date(new Date(ev.date).setHours(0, 0, 0, 0));
-    const end = ev.ends_at ? new Date(ev.ends_at) : new Date(new Date(ev.date).setHours(23, 59, 59, 999));
-    return { now, start, end };
+async function deletePaidFine(fine) {
+    if (!confirm(`Are you sure you want to remove the record for paid fine ${fine.reference_no}?`)) return;
+    loading.value = true;
+    try {
+        const studentId = localStorage.getItem('studentId');
+        await apiRequest(`/api/students/${encodeURIComponent(studentId)}/fines/${fine.id}`, {
+            method: 'DELETE'
+        });
+        studentFines.value = studentFines.value.filter(f => f.id !== fine.id);
+        successMessage.value = 'Paid fine record deleted successfully.';
+        setTimeout(() => successMessage.value = '', 3000);
+    } catch (e) {
+        showAlert(e.message || 'Failed to delete paid fine record.');
+    } finally {
+        loading.value = false;
+    }
 }
 
 async function markPresent(eventId, qrToken, lat, lng) {
@@ -534,9 +790,9 @@ async function markPresent(eventId, qrToken, lat, lng) {
                 student_lng: lng
             } 
         });
-        successMessage.value = 'Attendance recorded successfully.';
+        successMessage.value = 'Attendance successfully recorded.';
         await loadStudentData(studentId);
-        setTimeout(() => successMessage.value = '', 3000);
+        setTimeout(() => successMessage.value = '', 4000);
     } catch (e) {
         showAlert(e.message);
     } finally {
@@ -590,7 +846,7 @@ async function handleQrImageUpload(event) {
         ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const code = window.jsQR?.(imageData.data, canvas.width, canvas.height, { inversionAttempts: 'attemptBoth' });
-        if (!code?.data) { showAlert('QR code could not be detected. Use a clear, straight image with the full QR code visible.'); return; }
+        if (!code?.data) { showAlert('QR code could not be detected. Use a clear image with the full QR code visible.'); return; }
         await handleQrCode(String(code.data).trim());
     } catch { showAlert('The selected image could not be read. Please try a clearer QR image.'); }
 }
@@ -629,17 +885,18 @@ function startQrLoop() {
 
 async function handleQrCode(token) {
     isVerifying.value = true;
-    
     if (qrStream) {
         qrStream.getTracks().forEach((t) => t.stop());
     }
 
     try {
-        const position = await new Promise((resolve, reject) => {
+        const position = await new Promise((resolve) => {
             if (!navigator.geolocation) {
-                reject(new Error("Geolocation is not supported by your browser"));
+                resolve({ coords: { latitude: null, longitude: null } });
             } else {
-                navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy: true, timeout: 10000 });
+                navigator.geolocation.getCurrentPosition(resolve, () => {
+                    resolve({ coords: { latitude: null, longitude: null } });
+                }, { enableHighAccuracy: true, timeout: 6000 });
             }
         });
 
@@ -649,18 +906,14 @@ async function handleQrCode(token) {
         await markPresent(currentEventForQr.value, token, lat, lng);
         closeQrScanner();
     } catch (error) {
-        let msg = "Could not verify location.";
-        if (error.code === 1) msg = "Location permission denied. Please enable GPS.";
-        else if (error.code === 2) msg = "Position unavailable. Please ensure GPS is working.";
-        else if (error.code === 3) msg = "Location request timed out.";
-        showAlert(msg);
+        showAlert(error.message || 'Could not process check-in.');
         closeQrScanner();
     }
 }
 
 function openTestCheckin(ev) {
     testEvent.value = ev;
-    testTokenInput.value = '';
+    testTokenInput.value = ev.session_token || '';
     testModalOpen.value = true;
 }
 
@@ -670,11 +923,8 @@ async function submitTestCheckin() {
         return;
     }
     testModalOpen.value = false;
-    
-    // Simulate GPS by sending the exact event coordinates so distance is 0
-    const lat = testEvent.value.latitude || 0;
-    const lng = testEvent.value.longitude || 0;
-    
+    const lat = testEvent.value?.latitude || null;
+    const lng = testEvent.value?.longitude || null;
     await markPresent(testEvent.value.id, testTokenInput.value.trim(), lat, lng);
 }
 
@@ -687,700 +937,958 @@ onMounted(() => {
 
 <style scoped>
 /* ===========================================================
-   DESIGN TOKENS
-   =========================================================== */
-:root {
-    --navy:        #0f2044;
-    --navy-mid:    #1e3a5f;
-    --navy-light:  #2c5282;
-    --blue:        #3b82f6;
-    --blue-light:  #dbeafe;
-    --green:       #10b981;
-    --green-light: #d1fae5;
-    --red:         #ef4444;
-    --red-light:   #fee2e2;
-    --amber:       #f59e0b;
-    --amber-light: #fef3c7;
-    --purple:      #8b5cf6;
-    --purple-light:#ede9fe;
-    --bg:          #f1f5f9;
-    --surface:     #ffffff;
-    --border:      #e2e8f0;
-    --text:        #0f2044;
-    --text-muted:  #64748b;
-    --radius-sm:   10px;
-    --radius-md:   14px;
-    --radius-lg:   20px;
-    --shadow-sm:   0 1px 4px rgba(15,32,68,.06);
-    --shadow-md:   0 4px 16px rgba(15,32,68,.08);
-    --shadow-lg:   0 8px 32px rgba(15,32,68,.10);
-}
-
-.mobile-only { display: none; }
-
-/* ===========================================================
-   LAYOUT
+   ROOT LAYOUT
    =========================================================== */
 .dashboard-wrapper {
     display: flex;
     min-height: 100vh;
-    background-color: var(--bg);
-    font-family: 'Inter', 'Outfit', ui-sans-serif, system-ui, sans-serif;
-    color: var(--text);
+    background: #f8fafc;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1e293b;
 }
 
 /* ===========================================================
-   SIDEBAR
+   SIDEBAR (Clean, Compact, ZERO SCROLLBAR)
    =========================================================== */
 .sidebar {
-    width: 270px;
+    width: 240px;
     flex-shrink: 0;
-    background: linear-gradient(165deg, #0f2044 0%, #1a3560 100%);
-    color: white;
+    background: #0f172a; /* Solid deep professional slate */
+    color: #f8fafc;
     display: flex;
     flex-direction: column;
-    padding: 1.5rem 1.25rem;
+    padding: 1rem 0.85rem;
+    height: 100vh;
     position: sticky;
     top: 0;
-    height: 100vh;
-    overflow-y: auto;
-    border-right: 1px solid rgba(255,255,255,0.07);
-    box-shadow: 4px 0 24px rgba(0,0,0,0.12);
+    box-sizing: border-box;
+    overflow-y: auto; /* Scrollable if viewport is small, ZERO visible scrollbar */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    border-right: 1px solid #1e293b;
 }
-.sidebar-close-row {
+.sidebar::-webkit-scrollbar {
+    display: none;
+}
+
+.sidebar-mobile-close {
     display: none;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.75rem;
 }
-.sidebar-brand-logo {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.85rem;
+.mobile-brand-title {
+    font-size: 0.95rem;
     font-weight: 700;
-    color: rgba(255,255,255,0.85);
+    color: #ffffff;
 }
 .sidebar-close-btn {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 10px;
-    color: white;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: transparent;
+    border: none;
+    color: #94a3b8;
     cursor: pointer;
-    transition: background 0.2s;
+    padding: 4px;
 }
-.sidebar-close-btn:hover { background: rgba(255,255,255,0.15); }
 
-.sidebar-header {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    padding-top: 0.5rem;
+/* University Brand */
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.35rem 0.5rem 0.85rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
-.avatar-glow-ring {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 1rem;
-}
-.avatar-glow-ring::before {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border-radius: 30px;
-    background: linear-gradient(135deg, #3b82f6, #6366f1, #a855f7);
-    z-index: 0;
-    animation: ringPulse 3s ease-in-out infinite;
-}
-@keyframes ringPulse {
-    0%, 100% { opacity: 0.6; transform: scale(1); }
-    50%       { opacity: 1;   transform: scale(1.03); }
-}
-.avatar-wrapper {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    z-index: 1;
-}
-.avatar-gradient {
-    width: 100%;
-    height: 100%;
-    border-radius: 20px;
-    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #a855f7 100%);
-    transform: rotate(6deg);
-    box-shadow: 0 8px 20px rgba(59,130,246,0.3);
-}
-.avatar-text {
-    position: absolute;
-    inset: 0;
+.brand-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
-    font-weight: 800;
-    color: white;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-.sidebar-user-info h2 {
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin-bottom: 0.3rem;
-    color: white;
-}
-.student-id {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.35rem;
-    font-size: 0.75rem;
-    color: rgba(255,255,255,0.45);
-    margin-bottom: 0.75rem;
-    font-family: 'Courier New', monospace;
-    letter-spacing: 0.05em;
-}
-.badge-row { display: flex; gap: 0.4rem; justify-content: center; flex-wrap: wrap; }
-.badge {
-    padding: 0.25rem 0.65rem;
-    border-radius: 20px;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-}
-.badge.course { background: rgba(99,102,241,0.25); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.3); }
-.badge.year   { background: rgba(59,130,246,0.2);  color: #93c5fd; border: 1px solid rgba(59,130,246,0.25); }
-
-.sidebar-divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    margin: 0 0 1.25rem;
-}
-.sidebar-nav-label {
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: rgba(255,255,255,0.3);
-    margin: 0 0.5rem 0.75rem;
-    text-transform: uppercase;
-}
-.sidebar-nav { display: flex; flex-direction: column; gap: 0.35rem; }
-.sidebar-nav a {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    padding: 0.75rem 0.9rem;
-    border-radius: 12px;
-    color: rgba(255,255,255,0.5);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.9rem;
-    transition: all 0.2s;
-    border: 1px solid transparent;
-}
-.sidebar-nav a:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.85); }
-.sidebar-nav a.active {
-    background: linear-gradient(100deg, rgba(59,130,246,0.28), rgba(59,130,246,0.12));
-    color: white;
-    border-color: rgba(147,197,253,0.18);
-    box-shadow: inset 3px 0 0 #60a5fa;
-}
-.sidebar-nav a.active .nav-icon-wrap { background: rgba(59,130,246,0.3); color: #93c5fd; }
-.nav-icon-wrap {
-    width: 34px; height: 34px;
-    display: flex; align-items: center; justify-content: center;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.07);
     flex-shrink: 0;
-    transition: all 0.2s;
 }
-.nav-label { flex: 1; }
-.nav-arrow { font-size: 1rem; color: rgba(255,255,255,0.2); transition: all 0.2s; }
-.sidebar-nav a.active .nav-arrow { color: rgba(255,255,255,0.55); }
-.sidebar-nav a:hover .nav-arrow  { color: rgba(255,255,255,0.4); transform: translateX(2px); }
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+.brand-name {
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+}
+.brand-sub {
+    font-size: 0.7rem;
+    color: #94a3b8;
+}
 
-.sidebar-footer { margin-top: 0.5rem; }
-.sidebar-footer-divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-    margin-bottom: 1rem;
+/* Compact Student Profile Strip */
+.student-profile-strip {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.75rem 0.5rem;
+    margin: 0.65rem 0;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 8px;
 }
-.logout-btn-premium {
-    width: 100%;
-    background: rgba(239,68,68,0.1);
-    color: rgba(248,113,113,0.9);
-    border: 1px solid rgba(239,68,68,0.2);
-    padding: 0.75rem 0.9rem;
-    border-radius: 12px;
+.student-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #93c5fd;
+    font-weight: 700;
+    font-size: 0.82rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.student-meta {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.25;
+}
+.student-name {
+    font-size: 0.85rem;
     font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    text-align: left;
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    transition: all 0.2s;
-}
-.logout-btn-premium:hover {
-    background: rgba(239,68,68,0.18);
-    color: #fca5a5;
-    border-color: rgba(239,68,68,0.35);
-}
-.logout-icon { background: rgba(239,68,68,0.15); }
-
-/* ===========================================================
-   MAIN CONTENT
-   =========================================================== */
-.main-content {
-    flex: 1;
-    min-width: 0;
-    padding: clamp(1.25rem, 3vw, 2.5rem);
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-    overflow-y: auto;
-    height: 100vh;
-    box-sizing: border-box;
-}
-.mobile-header {
-    display: none;
-    align-items: center;
-    gap: 0.75rem;
-    background: #0f2044;
-    padding: 0.9rem 1.25rem;
-    color: white;
-    margin: -1.25rem -1.25rem 1.5rem;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    position: sticky;
-    top: 0;
-    z-index: 20;
-}
-.mobile-header .brand { font-size: 1rem; font-weight: 700; color: white; }
-.hamburger-btn { background: none; border: none; color: white; cursor: pointer; padding: 2px; border-radius: 4px; }
-.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 999; }
-.sidebar-overlay.show { display: block; }
-
-/* ===========================================================
-   CONTENT HEADER
-   =========================================================== */
-.content-header {
-    margin-bottom: 1.5rem;
-    padding-bottom: 1.25rem;
-    border-bottom: 1px solid var(--border);
-}
-.content-header h1 {
-    font-size: clamp(1.5rem, 2.5vw, 2rem);
-    font-weight: 800;
-    color: var(--navy);
-    letter-spacing: -0.03em;
-    line-height: 1.15;
-    margin-bottom: 0.35rem;
-}
-.content-header p { color: var(--text-muted); font-size: 0.9rem; }
-.content-header p strong { color: var(--navy-mid); font-weight: 600; }
-
-/* ===========================================================
-   STAT CARDS
-   =========================================================== */
-.stats-grid-premium {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-}
-.stat-card-premium {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 1.25rem 1.4rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    min-width: 0;
-}
-.stat-card-premium:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-.stat-icon {
-    width: 46px; height: 46px;
-    flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    border-radius: var(--radius-md);
-}
-.stat-icon.blue   { background: #eff6ff; color: #2563eb; }
-.stat-icon.green  { background: #f0fdf4; color: #16a34a; }
-.stat-icon.red    { background: #fff1f2; color: #c24141; }
-.stat-icon.purple { background: #f5f3ff; color: #7c3aed; }
-.stat-content { min-width: 0; }
-.stat-content .label {
-    display: block;
-    font-size: 0.74rem;
-    color: var(--text-muted);
-    font-weight: 500;
-    margin-bottom: 0.15rem;
+    color: #ffffff;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.stat-content .value {
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: var(--navy);
-    letter-spacing: -0.03em;
-    line-height: 1;
+.student-id-text {
+    font-size: 0.72rem;
+    color: #94a3b8;
+    font-family: ui-monospace, monospace;
+}
+.student-course-text {
+    font-size: 0.68rem;
+    color: #64748b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* ===========================================================
-   ATTENDANCE ALERT
-   =========================================================== */
-.alert-banner {
+/* Navigation Links */
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: 0.25rem;
+}
+.nav-link {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    background: #fffbeb;
-    border: 1px solid #fcd34d;
-    border-left: 4px solid var(--amber);
-    border-radius: var(--radius-md);
-    padding: 0.85rem 1.1rem;
-    margin-bottom: 1.25rem;
-    font-size: 0.875rem;
-    color: #78350f;
+    gap: 0.65rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: 8px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.15s ease;
 }
-.alert-icon { font-size: 1.1rem; flex-shrink: 0; }
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #f8fafc;
+}
+.nav-link.active {
+    background: #1e293b;
+    color: #ffffff;
+    font-weight: 600;
+}
+.nav-link.active svg {
+    color: #38bdf8;
+}
+.nav-link svg {
+    flex-shrink: 0;
+}
+.fine-badge {
+    margin-left: auto;
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.1rem 0.45rem;
+    border-radius: 10px;
+}
+
+/* Sidebar Bottom (Sign Out) */
+.sidebar-bottom {
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.logout-link {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: #94a3b8;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.logout-link:hover {
+    background: rgba(239, 68, 68, 0.12);
+    color: #fca5a5;
+}
 
 /* ===========================================================
-   TWO-COLUMN MAIN SECTION
+   MAIN CONTENT AREA
    =========================================================== */
-.dashboard-two-col {
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
-    gap: 1rem;
-    align-items: start;
-    margin-bottom: 1rem;
-}
-
-/* ===========================================================
-   SECTION CARD (shared)
-   =========================================================== */
-.section-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 1.4rem 1.5rem;
-    box-shadow: var(--shadow-sm);
+.main-content {
+    flex: 1;
     min-width: 0;
-    overflow: hidden;
+    padding: 1.5rem 2rem;
+    max-width: 1300px;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
-.section-header {
+
+.dashboard-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* Mobile Header */
+.mobile-header {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    background: #0f172a;
+    color: white;
+    padding: 0.75rem 1rem;
+    margin: -1.5rem -2rem 1.25rem;
+}
+.hamburger-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 2px;
+}
+.mobile-header-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+.mobile-student-initial {
+    width: 30px;
+    height: 30px;
+    background: #2563eb;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+}
+.sidebar-overlay.show { display: block; }
+
+/* ===========================================================
+   DASHBOARD HEADER
+   =========================================================== */
+.dashboard-header {
+    margin-bottom: 0.25rem;
+}
+.page-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.25rem;
+    letter-spacing: -0.02em;
+}
+.page-subtitle {
+    font-size: 0.88rem;
+    color: #64748b;
+    margin: 0;
+}
+
+/* ===========================================================
+   STATISTICS CARDS (Clean, Human Design)
+   =========================================================== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+}
+.stat-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1.15rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.stat-icon-box {
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.stat-icon-box.blue   { background: #eff6ff; color: #2563eb; }
+.stat-icon-box.green  { background: #f0fdf4; color: #16a34a; }
+.stat-icon-box.red    { background: #fef2f2; color: #dc2626; }
+.stat-icon-box.purple { background: #f5f3ff; color: #7c3aed; }
+
+.stat-details {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+.stat-label {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #64748b;
+    margin-bottom: 0.2rem;
+}
+.stat-value {
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+.stat-value-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+.stat-rate-sub {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+}
+.tag-green { background: #dcfce7; color: #15803d; }
+.tag-amber { background: #fef3c7; color: #b45309; }
+
+.text-green { color: #16a34a; }
+.text-red   { color: #dc2626; }
+
+/* ===========================================================
+   CLEAN OFFICIAL ALERTS
+   =========================================================== */
+.clean-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    border-radius: 8px;
+    font-size: 0.86rem;
+    line-height: 1.45;
+}
+.clean-alert.alert-warning {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #92400e;
+}
+.clean-alert.alert-danger {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+}
+.alert-icon {
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+.alert-text {
+    flex: 1;
+}
+.alert-link {
+    color: #b91c1c;
+    font-weight: 600;
+    text-decoration: underline;
+    margin-left: 0.4rem;
+}
+
+/* ===========================================================
+   TWO-COLUMN CONTENT BOXES
+   =========================================================== */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.85fr);
+    gap: 1.25rem;
+    align-items: start;
+}
+
+.content-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1.25rem 1.4rem;
+}
+
+.box-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.65rem;
     margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #f1f5f9;
 }
-.section-header h2 {
-    margin: 0;
+.box-title {
     font-size: 1.05rem;
     font-weight: 700;
-    color: var(--navy);
-    letter-spacing: -0.02em;
+    color: #0f172a;
+    margin: 0;
 }
-.section-caption { margin: 0.2rem 0 0; font-size: 0.78rem; color: var(--text-muted); }
+.box-subtitle {
+    font-size: 0.78rem;
+    color: #64748b;
+    margin: 0.15rem 0 0;
+}
 
-/* ===========================================================
-   EVENT HUB
-   =========================================================== */
-.event-hub-card { display: flex; flex-direction: column; }
-.hub-tabs { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-.hub-tab {
+/* Tab Pills in Event Hub */
+.tab-pill-group {
+    display: flex;
+    background: #f1f5f9;
+    padding: 2px;
+    border-radius: 6px;
+    gap: 2px;
+}
+.tab-pill {
+    padding: 0.35rem 0.7rem;
+    border: none;
+    background: transparent;
+    border-radius: 5px;
+    font-size: 0.76rem;
+    font-weight: 500;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.tab-pill:hover { color: #0f172a; }
+.tab-pill.active {
+    background: #ffffff;
+    color: #0f172a;
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Event Rows */
+.event-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+.event-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.75rem 0.85rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+}
+.event-row.ongoing-row {
+    background: #ffffff;
+    border-color: #cbd5e1;
+}
+.event-row-main {
+    flex: 1;
+    min-width: 0;
+}
+.event-name-line {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+.event-title {
+    font-size: 0.88rem;
+    color: #0f172a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.badge-live {
+    font-size: 0.65rem;
+    font-weight: 700;
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+}
+.event-meta-line {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 0.2rem;
+}
+.deadline-text { color: #d97706; font-weight: 600; }
+.fine-note { color: #dc2626; font-weight: 600; }
+
+.event-row-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+}
+.btn-checkin {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    padding: 0.35rem 0.8rem;
-    border: 1px solid var(--border);
-    border-radius: 20px;
+    background: #16a34a;
+    color: white;
+    border: none;
+    padding: 0.45rem 0.85rem;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+.btn-checkin:hover { background: #15803d; }
+.btn-outline-sm {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.76rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+.btn-outline-sm:hover { background: #f8fafc; }
+
+/* Status Badges */
+.badge-status {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.25rem 0.55rem;
+    border-radius: 4px;
+}
+.badge-status.present { background: #dcfce7; color: #15803d; }
+.badge-status.absent  { background: #fee2e2; color: #b91c1c; }
+.badge-status.excused { background: #ede9fe; color: #6d28d9; }
+.badge-status.closed  { background: #f1f5f9; color: #64748b; }
+.badge-status.neutral { background: #f1f5f9; color: #475569; }
+.badge-status.unpaid  { background: #fee2e2; color: #b91c1c; }
+.badge-status.paid    { background: #dcfce7; color: #15803d; }
+
+/* Clean Empty State */
+.empty-state-clean {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: #64748b;
+    font-size: 0.85rem;
+}
+.empty-state-clean p { margin: 0.4rem 0 0; }
+.btn-clean-link {
+    margin-top: 0.5rem;
+    background: transparent;
+    border: none;
+    color: #2563eb;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* ===========================================================
+   ATTENDANCE OVERVIEW BOX
+   =========================================================== */
+.rate-display-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+}
+.rate-large {
+    font-size: 2.25rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+}
+.rate-target-label {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.progress-bar-track {
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1.15rem;
+}
+.progress-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s ease;
+}
+.fill-green { background: #16a34a; }
+.fill-red   { background: #dc2626; }
+
+.breakdown-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    font-size: 0.82rem;
+}
+.breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    color: #475569;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+.breakdown-row.total-row {
+    border-bottom: none;
+    font-weight: 600;
+    color: #0f172a;
+    padding-top: 0.25rem;
+}
+.breakdown-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.dot-green  { background: #16a34a; }
+.dot-red    { background: #dc2626; }
+.dot-purple { background: #7c3aed; }
+.breakdown-value {
+    font-weight: 600;
+    color: #0f172a;
+}
+.policy-note {
+    margin-top: 0.85rem;
+    padding: 0.6rem 0.75rem;
+    background: #f8fafc;
+    border-radius: 6px;
+    font-size: 0.74rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+/* ===========================================================
+   STANDARD TABLES
+   =========================================================== */
+.btn-text-link {
+    background: transparent;
+    border: none;
+    color: #2563eb;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+.btn-text-link:hover { text-decoration: underline; }
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+.standard-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+    text-align: left;
+}
+.standard-table th {
+    background: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+    padding: 0.65rem 0.85rem;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+.standard-table td {
+    padding: 0.75rem 0.85rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: middle;
+}
+.standard-table tr:hover td {
+    background: #f8fafc;
+}
+.standard-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ===========================================================
+   FINES SECTION
+   =========================================================== */
+.fine-summary-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: 1rem;
+}
+.fine-total-box {
+    display: flex;
+    flex-direction: column;
+}
+.fine-box-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+}
+.fine-box-amount {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0.25rem 0;
+}
+.fine-box-sub {
+    font-size: 0.78rem;
+    color: #64748b;
+    margin: 0;
+}
+.fine-guide-box .guide-title {
+    display: block;
+    font-size: 0.9rem;
+    color: #0f172a;
+    margin-bottom: 0.35rem;
+}
+.fine-guide-box .guide-text {
+    font-size: 0.82rem;
+    color: #475569;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ===========================================================
+   MODALS
+   =========================================================== */
+.clean-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 1000;
+}
+.clean-modal-dialog {
+    background: #ffffff;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 480px;
+    padding: 1.25rem 1.4rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+.modal-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+.modal-title-row h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+.btn-close {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.modal-sub {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 1rem;
+}
+.form-group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.35rem;
+}
+.form-textarea, .form-input {
+    width: 100%;
+    padding: 0.65rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+.modal-btn-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+.btn-delete-sm {
+    background: #fee2e2;
+    border: 1px solid #fca5a5;
+    color: #b91c1c;
+    padding: 0.25rem 0.65rem;
+    border-radius: 4px;
     font-size: 0.75rem;
     font-weight: 600;
     cursor: pointer;
-    background: var(--surface);
-    color: var(--text-muted);
-    transition: all 0.2s;
+    transition: all 0.15s;
 }
-.hub-tab:hover { border-color: #93c5fd; color: var(--navy); }
-.hub-tab.active { background: var(--blue); color: white; border-color: transparent; box-shadow: 0 2px 8px rgba(59,130,246,0.3); }
-.hub-badge {
-    display: inline-flex; align-items: center; justify-content: center;
-    min-width: 18px; height: 18px; padding: 0 5px;
-    border-radius: 10px; font-size: 0.68rem; font-weight: 700;
-    background: rgba(255,255,255,0.25);
+.btn-delete-sm:hover {
+    background: #ef4444;
+    color: white;
 }
-.hub-badge.neutral { background: rgba(100,116,139,0.12); color: var(--text-muted); }
-.hub-tab.active .hub-badge { background: rgba(255,255,255,0.3); color: white; }
-
-.hub-empty {
-    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-    padding: 2rem 1rem; text-align: center; color: var(--text-muted); font-size: 0.85rem;
+.btn-cancel {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #475569;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    cursor: pointer;
 }
-.hub-action-btn {
-    margin-top: 0.25rem;
-    padding: 0.45rem 1.1rem;
-    border: none; border-radius: 20px;
-    background: var(--blue); color: white;
-    font-size: 0.78rem; font-weight: 600; cursor: pointer;
-    transition: opacity 0.2s;
+.btn-submit {
+    background: #2563eb;
+    border: none;
+    color: white;
+    padding: 0.5rem 1.15rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
 }
-.hub-action-btn:hover { opacity: 0.85; }
-
-.hub-event-row {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 0.75rem; padding: 0.65rem 0;
-    border-bottom: 1px solid var(--border);
-}
-.hub-event-row:last-child { border-bottom: none; }
-.hub-event-info { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; flex: 1 1 0; }
-.hub-event-info strong {
-    font-size: 0.875rem; color: var(--navy); font-weight: 600;
-    text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.hub-event-info span { font-size: 0.72rem; color: var(--text-muted); }
-
-.hub-checkin-btn {
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    flex-shrink: 0; padding: 0.45rem 0.9rem;
-    border: none; border-radius: 20px;
-    background: #059669; color: white;
-    font-size: 0.75rem; font-weight: 700; cursor: pointer;
-    box-shadow: 0 2px 8px rgba(5,150,105,0.25);
-    transition: all 0.2s;
-}
-.hub-checkin-btn:hover { background: #047857; transform: translateY(-1px); }
-.hub-checkin-btn:disabled { opacity: 0.6; cursor: wait; }
-
-.details-btn {
-    flex-shrink: 0; padding: 0.4rem 0.8rem;
-    border: 1px solid var(--border); border-radius: 8px;
-    background: var(--surface); color: var(--navy-mid);
-    font-size: 0.76rem; font-weight: 600; cursor: pointer;
-    transition: all 0.2s;
-}
-.details-btn:hover { background: #f8fafc; border-color: #93c5fd; }
-
-.test-mode-toggle {
-    display: flex; align-items: center; gap: 0.4rem;
-    font-size: 0.74rem; color: var(--text-muted);
-    cursor: pointer; margin-bottom: 0.6rem;
+.btn-danger {
+    background: #dc2626;
+    border: none;
+    color: white;
+    padding: 0.5rem 1.15rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
 }
 
-/* ===========================================================
-   ATTENDANCE PROGRESS CARD
-   =========================================================== */
-.progress-card {}
-.rate-header {
-    display: flex; justify-content: space-between; align-items: flex-start;
-    flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;
-}
-.rate-value { font-size: 1.75rem; font-weight: 800; line-height: 1; letter-spacing: -0.04em; }
-.rate-bar-track {
-    height: 10px; background: var(--border);
-    border-radius: 10px; overflow: hidden; margin-bottom: 0.75rem;
-}
-.rate-bar-fill {
-    height: 100%; border-radius: 10px;
-    transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
-    min-width: 4px;
-}
-.rate-legend { display: flex; gap: 1.25rem; font-size: 0.8rem; color: var(--text-muted); flex-wrap: wrap; }
-.rate-legend span { display: flex; align-items: center; gap: 0.4rem; }
-.legend-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.present-dot { background: #10b981; }
-.absent-dot  { background: #d1d5db; }
-
-/* ===========================================================
-   RECENT ATTENDANCE - full width
-   =========================================================== */
-.recent-section-full {}
-
-.text-link {
-    border: 0; padding: 0.35rem 0; background: transparent;
-    color: var(--blue); font-size: 0.82rem; font-weight: 600;
-    cursor: pointer; white-space: nowrap; transition: color 0.2s;
-}
-.text-link:hover { color: #1d4ed8; }
-
-.compact-empty {
-    padding: 1.5rem 1rem; border-radius: var(--radius-sm);
-    background: #f8fafc; color: var(--text-muted);
-    font-size: 0.85rem; text-align: center;
-    border: 1px dashed var(--border);
-}
-
-/* ===========================================================
-   TABLES
-   =========================================================== */
-.recent-table-wrap,
-.history-table-wrapper {
-    overflow-x: auto;
-    max-width: 100%;
-    -webkit-overflow-scrolling: touch;
-}
-.history-table { width: 100%; border-collapse: collapse; min-width: 520px; }
-.history-table th {
-    text-align: left;
-    padding: 0.75rem 1rem;
-    font-size: 0.72rem; font-weight: 700;
-    color: var(--text-muted);
-    text-transform: uppercase; letter-spacing: 0.07em;
+/* Event Specs */
+.event-desc { font-size: 0.85rem; color: #475569; margin-bottom: 0.75rem; }
+.event-details-grid {
     background: #f8fafc;
-    border-bottom: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.75rem;
+    font-size: 0.82rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    color: #334155;
 }
-.history-table th:first-child { border-radius: 8px 0 0 8px; }
-.history-table th:last-child  { border-radius: 0 8px 8px 0; }
-.history-table td {
-    padding: 0.9rem 1rem;
-    border-bottom: 1px solid #f1f5f9;
-    color: var(--text-muted);
-    font-size: 0.875rem;
-}
-.history-table tbody tr:last-child td { border-bottom: none; }
-.history-table tbody tr:hover { background: #f8fafc; }
-.font-bold { font-weight: 700; color: var(--navy); }
 
-.status-badge {
-    display: inline-flex; align-items: center; justify-content: center;
-    min-width: 80px; padding: 0.3rem 0.75rem;
-    border-radius: 20px; font-size: 0.74rem; font-weight: 700;
-    white-space: nowrap;
+/* Scanner Frame */
+.scanner-frame {
+    width: 100%;
+    aspect-ratio: 1;
+    background: black;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 0.75rem;
 }
-.status-badge.present { background: var(--green-light); color: #065f46; }
-.status-badge.absent  { background: var(--red-light);   color: #991b1b; }
+.scanner-video { width: 100%; height: 100%; object-fit: cover; }
+.scanner-status-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.85rem;
+}
+.scanner-btn-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.btn-upload {
+    background: #16a34a;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+.scanner-help-text {
+    font-size: 0.75rem;
+    color: #64748b;
+    text-align: center;
+    margin: 0;
+}
 
-/* ===========================================================
-   HISTORY TAB
-   =========================================================== */
-.empty-state { text-align: center; padding: 3rem 1rem; color: var(--text-muted); }
-
-/* ===========================================================
-   TOAST & MODALS
-   =========================================================== */
-.toast-notification {
-    position: fixed; bottom: 2rem; right: 2rem;
-    background: var(--navy); color: white;
-    padding: 0.9rem 1.5rem; border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg); z-index: 2000;
-    font-weight: 600; font-size: 0.9rem;
+/* Toast */
+.toast-box {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: #0f172a;
+    color: white;
+    padding: 0.75rem 1.15rem;
+    border-radius: 6px;
+    font-size: 0.84rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 2000;
 }
-.toast-enter-active, .toast-leave-active { transition: all 0.3s ease; }
-.toast-enter-from, .toast-leave-to { opacity: 0; transform: translateY(12px); }
-
-.qr-modal {
-    position: fixed; inset: 0;
-    background: rgba(15,32,68,0.55);
-    backdrop-filter: blur(4px);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 1000; padding: 1rem;
-}
-.qr-modal-inner {
-    background: white; padding: 2rem;
-    border-radius: var(--radius-lg);
-    max-width: 400px; width: 100%;
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--border);
-}
-.spinner {
-    width: 36px; height: 36px;
-    border: 3px solid rgba(255,255,255,0.2);
-    border-top: 3px solid #10b981;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-}
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-.qr-upload-btn {
-    display: inline-flex; align-items: center; justify-content: center;
-    padding: 0.7rem 1rem; border-radius: 8px;
-    background: #059669; color: white;
-    font-weight: 600; font-size: 0.875rem; cursor: pointer;
-}
-.qr-upload-btn:hover { background: #047857; }
-.qr-help { margin: 0.9rem 0 0; color: var(--text-muted); font-size: 0.78rem; text-align: center; }
 
 /* ===========================================================
-   RESPONSIVE BREAKPOINTS
+   RESPONSIVE QUERIES
    =========================================================== */
-@media (max-width: 1100px) {
-    .sidebar { width: 245px; }
-    .stats-grid-premium { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .dashboard-two-col { grid-template-columns: 1fr; }
+@media (max-width: 1024px) {
+    .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .dashboard-grid { grid-template-columns: 1fr; }
+    .fine-summary-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
     .sidebar {
         position: fixed;
         top: 0; bottom: 0; left: 0;
-        height: 100vh; height: 100dvh;
-        width: min(84vw, 300px);
+        height: 100vh;
+        width: 250px;
         z-index: 1000;
         transform: translateX(-100%);
-        transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
-        padding: 1rem;
-        overflow-y: auto;
-        overscroll-behavior: contain;
+        transition: transform 0.25s ease;
     }
-    .sidebar.sidebar-open { transform: translateX(0); box-shadow: 6px 0 24px rgba(0,0,0,0.2); }
-    .sidebar-close-row { display: flex; }
-    .mobile-only { display: flex !important; }
-    .sidebar-header { display: flex; align-items: center; text-align: left; gap: 0.85rem; padding: 0.75rem 0 1rem; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .avatar-glow-ring { margin-bottom: 0; }
-    .avatar-wrapper { width: 52px; height: 52px; }
-    .avatar-text { font-size: 1.3rem; }
-    .sidebar-user-info h2 { font-size: 0.9rem; }
-    .student-id { justify-content: flex-start; }
-    .badge-row { justify-content: flex-start; }
+    .sidebar.sidebar-open { transform: translateX(0); }
+    .sidebar-mobile-close { display: flex; }
     .mobile-header { display: flex; }
-    .main-content {
-        height: auto; min-height: 100vh;
-        max-width: none; width: 100%;
-        overflow: visible;
-        padding: 1.25rem 1rem;
-    }
-    .mobile-header { margin: -1.25rem -1rem 1.25rem; }
-    .stats-grid-premium { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.65rem; }
-    .stat-card-premium { padding: 1rem; }
-    .stat-content .value { font-size: 1.35rem; }
-    .dashboard-two-col { grid-template-columns: 1fr; gap: 0.75rem; }
-    .history-table-wrapper, .recent-table-wrap { width: 100%; overflow-x: auto; }
-    .recent-section-full { overflow: hidden; }
-}
-
-@media (max-width: 480px) {
-    .main-content { padding: 1rem 0.75rem; }
-    .mobile-header { margin: -1rem -0.75rem 1rem; padding: 0.75rem 1rem; }
-    .content-header { margin-bottom: 1rem; padding-bottom: 1rem; }
-    .content-header h1 { font-size: 1.35rem; }
-    .stats-grid-premium { gap: 0.5rem; }
-    .stat-card-premium { padding: 0.85rem 0.9rem; gap: 0.7rem; }
-    .stat-icon { width: 38px; height: 38px; }
-    .stat-icon svg { width: 18px; height: 18px; }
-    .stat-content .label { font-size: 0.7rem; }
-    .stat-content .value { font-size: 1.15rem; }
-    .section-card { padding: 1rem; }
-    .section-header h2 { font-size: 0.95rem; }
-    .hub-tabs { width: 100%; }
-    .hub-tab { flex: 1; justify-content: center; padding: 0.4rem 0.55rem; }
-    .hub-event-row { flex-wrap: wrap; }
-    .hub-event-info { flex-basis: 100%; }
-    .hub-checkin-btn, .details-btn { min-height: 38px; }
-    .rate-value { font-size: 1.4rem; }
-    .alert-banner { align-items: flex-start; padding: 0.7rem; line-height: 1.45; font-size: 0.82rem; }
-    .toast-notification { left: 0.75rem; right: 0.75rem; bottom: 0.75rem; padding: 0.75rem 1rem; font-size: 0.85rem; }
-    .qr-modal { padding: 0.75rem; overflow-y: auto; }
-    .qr-modal-inner { max-height: calc(100dvh - 1.5rem); overflow-y: auto; padding: 1.25rem; }
-}
-
-@media (max-width: 360px) {
-    .stats-grid-premium { grid-template-columns: 1fr; }
-    .stat-card-premium { flex-direction: row; align-items: center; }
+    .main-content { padding: 1rem; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .event-row { flex-direction: column; align-items: flex-start; }
+    .event-row-actions { width: 100%; justify-content: space-between; }
 }
 </style>
